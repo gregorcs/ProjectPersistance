@@ -15,4 +15,5 @@ public class SaleOrderController {
 	public void createInvoice() {
 		invoice = new Invoice();
 	}
+	
 }
