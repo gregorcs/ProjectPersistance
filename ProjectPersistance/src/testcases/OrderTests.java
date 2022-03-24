@@ -19,24 +19,24 @@ class OrderTests {
 
 	DBConnection con = DBConnection.getInstance();
 	
+	
 	public void OrderWassAdded() {
 		//Arrange
 		boolean isCorrect = true;
 		DaoSalesOrder salesOrderDao = new DaoSalesOrder();
 		Miscallaneous misc = new Miscallaneous("necklace", "346", "very good necklace", "necklace", "Bulgaria", 25,
 				55, 4.52f, 4.60f, 5.00f, "you better buy it");
-		//declaring persons
-		Employee employee = new Employee("greg", "234");
-		Customer customer = new Customer("543", "Alex", "thulevej", "9210", "Aalborg", "54323566", "yogmailcom");
 
 		//adding lineItem
-		LineItem lineItem = new LineItem(43, misc);
+
 		ArrayList<LineItem> itemsToBuy = new ArrayList<LineItem>();
-		itemsToBuy.add(lineItem);
 		
 		//assembling saleorder
 		SalesOrder salesOrder = new SalesOrder("234", "on its way", "2022-04-24", "543", "234", itemsToBuy);
-		salesOrder.setOrderId("569");
+		salesOrder.setOrderId("577");
+		LineItem lineItem = new LineItem(43, misc, salesOrder);
+		itemsToBuy.add(lineItem);
+
 		//Act
 		try {
 			salesOrderDao.create(salesOrder);
@@ -49,6 +49,36 @@ class OrderTests {
 		assertTrue(isCorrect);
 	}
 
+	
+	public void LineItemWasAdded() {
+		//Arrange
+		boolean isCorrect = true;
+		DaoSalesOrder salesOrderDao = new DaoSalesOrder();
+		Miscallaneous misc = new Miscallaneous("necklace", "346", "very good necklace", "necklace", "Bulgaria", 25,
+				55, 4.52f, 4.60f, 5.00f, "you better buy it");
+
+		//adding lineItem
+
+		ArrayList<LineItem> itemsToBuy = new ArrayList<LineItem>();
+		
+		//assembling saleorder
+		SalesOrder salesOrder = new SalesOrder("234", "on its way", "2022-04-24", "543", "234", itemsToBuy);
+		salesOrder.setOrderId("575");
+		LineItem lineItem = new LineItem(43, misc, salesOrder);
+		itemsToBuy.add(lineItem);
+		//Act
+		try {
+			salesOrderDao.createLineItem(lineItem);
+		} catch (Exception e) {
+			e.printStackTrace();
+			isCorrect = false;
+			System.out.println(e.getMessage());
+		}
+		//Assert
+		assertTrue(isCorrect);
+	}
+
+	
 	@Test
 	public void OrderWasFoundById() {
 		//Arrange
@@ -58,12 +88,16 @@ class OrderTests {
 		SalesOrder foundOrder = new SalesOrder();
 		//Act
 		try {
+			//this clean, on god no cap
 			foundOrder = salesOrderDao.read(idToBeFound);
 		} catch (Exception e) {
 			e.printStackTrace();
 			isCorrect = false;
 			System.out.println(e.getMessage());
 		}
+		System.out.print(foundOrder.getCustomerId());
+		System.out.print(foundOrder.getDeliveryDate());
+		System.out.print(foundOrder.getItemsToBuy().get(0).getQuantity());
 		//Assert
 		assertEquals(idToBeFound, foundOrder.getOrderId());
 		assertTrue(isCorrect);

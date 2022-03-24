@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import DAO.interfaces.SalesOrderInterface;
+import model.order.LineItem;
 import model.order.SalesOrder;
 
 public class DaoSalesOrder implements SalesOrderInterface{
@@ -16,6 +18,7 @@ public class DaoSalesOrder implements SalesOrderInterface{
 
 	
 	public String buildSalesOrderInsertString(SalesOrder salesOrder) {
+		//not good because of sql injection, would fix
 		String salesOrderInsert = "INSERT INTO SaleOrder (orderId, employeeId, customerId, date, amount, deliveryStatus, deliveryDate) values ";
 		salesOrderInsert += "('" + salesOrder.getOrderId() + "', '" + salesOrder.getEmployeeId() + "', '" + salesOrder.getCustomerId() + "', '" 
 		+ salesOrder.getDate() + "', '" + salesOrder.getAmount()
@@ -38,15 +41,37 @@ public class DaoSalesOrder implements SalesOrderInterface{
 		return stmt;
 	}
 	
-	@Override
-	public int create(SalesOrder salesOrder) throws Exception {
-		String salesOrderInsert = buildSalesOrderInsertString(salesOrder);
+	public PreparedStatement buildReadLineItemString(String orderId) {
+		String readOrder = "SELECT * FROM LineItem WHERE orderId = ?";
+		PreparedStatement stmt = null;
+		try {
+			stmt = con.prepareStatement(readOrder);
+			stmt.setString(1, orderId);
+		} catch (SQLException e) {
+			System.out.println(e + " Assembling prepared statement went wrong");
+			e.printStackTrace();
+		}
+		return stmt;
+	}
+	
+	public String buildLineItemString(LineItem lineItem) {
+		//this should throw an error
+		String lineItemInsert = "INSERT INTO LineItem (orderId, productId, quantity) values ";
+		lineItemInsert += "('" + lineItem.getSaleOrder().getOrderId() + "', '" + lineItem.getProduct().getProductId() + "', '" 
+		+ lineItem.getQuantity() + "')";
+		System.out.println(lineItemInsert);
+		
+		return lineItemInsert;
+	}
+
+	public int createLineItem(LineItem lineItem) throws Exception {
+		String lineItemInsert = buildLineItemString(lineItem);
 		int insertedKey = 1;
 		
-		try {
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(salesOrderInsert, Statement.RETURN_GENERATED_KEYS);
-			ResultSet rs = stmt.getGeneratedKeys();
+		try (Statement lineItemStmt = con.createStatement()) {
+			lineItemStmt.executeUpdate(lineItemInsert, Statement.RETURN_GENERATED_KEYS);
+			
+			ResultSet rs = lineItemStmt.getGeneratedKeys();
 			
 			while (rs.next()) {
 				insertedKey = rs.getInt(1);
@@ -55,7 +80,7 @@ public class DaoSalesOrder implements SalesOrderInterface{
 		} catch (SQLException e) {
 			insertedKey = -1;
 			//these Exceptions should be replaced by my own ex: DatabaseLayerException
-			throw new Exception("SQL exception");
+			throw new Exception("SQL exception in line item");
 		} catch (NullPointerException e) {
 			insertedKey = -2;
 			throw new Exception("Null pointer exception, possible connection problems");
@@ -68,7 +93,44 @@ public class DaoSalesOrder implements SalesOrderInterface{
 		
 		return insertedKey;
 	}
-
+	
+	public void createAllLineItems(ArrayList<LineItem> al) throws Exception {
+		for (LineItem lineItem : al) {
+			createLineItem(lineItem);
+		}
+	}
+	
+	@Override
+	public int create(SalesOrder salesOrder) throws Exception {
+		String salesOrderInsert = buildSalesOrderInsertString(salesOrder);
+		int insertedKey = 1;
+		
+		try {
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(salesOrderInsert, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = stmt.getGeneratedKeys();
+			
+			
+			while (rs.next()) {
+				insertedKey = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			insertedKey = -1;
+			//these Exceptions should be replaced by my own ex: DatabaseLayerException
+			throw new Exception("SQL exception in order");
+		} catch (NullPointerException e) {
+			insertedKey = -2;
+			throw new Exception("Null pointer exception, possible connection problems");
+		} catch (Exception e) {
+			insertedKey = -3;
+			throw new Exception("Technical error");
+		} finally {
+			DBConnection.closeConnection();
+		}
+		
+		return insertedKey;
+	}
 	@Override
 	public SalesOrder read(String id) throws Exception {
 		PreparedStatement stmt = buildReadSalesOrderString(id);
