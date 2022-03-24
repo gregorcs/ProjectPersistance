@@ -2,6 +2,7 @@ package model.person;
 
 public class Customer {
 
+	private String customerId;
 	private String name;
 	private String address;
 	private String zipcode;
@@ -37,6 +38,12 @@ public class Customer {
 	}
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	public String getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 	
 	

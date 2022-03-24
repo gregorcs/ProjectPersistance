@@ -1,5 +1,9 @@
 package model;
 
+import java.util.ArrayList;
+
+import model.product.Product;
+
 public class Supplier {
 
 	private String name;
@@ -7,6 +11,8 @@ public class Supplier {
 	private String country;
 	private String phoneNumber;
 	private String email;
+	
+	private ArrayList<Product> suppliedProducts;
 	
 	public String getName() {
 		return name;
@@ -37,6 +43,12 @@ public class Supplier {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public ArrayList<Product> getSuppliedProducts() {
+		return suppliedProducts;
+	}
+	public void setSuppliedProducts(ArrayList<Product> suppliedProducts) {
+		this.suppliedProducts = suppliedProducts;
 	}
 	
 	

@@ -12,6 +12,8 @@ public abstract class Product {
 	private float salesPrice;
 	private float rentPrice;	
 	
+	private String supplierId;
+	
 	public Product(String name, String description, String category, String countryOfOrigin, int minStock, int stock,
 			float purchasePrice, float salesPrice, float rentPrice) {
 		super();
@@ -79,6 +81,14 @@ public abstract class Product {
 	}
 	public void setRentPrice(float rentPrice) {
 		this.rentPrice = rentPrice;
+	}
+
+	public String getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
 	}
 	
 	
