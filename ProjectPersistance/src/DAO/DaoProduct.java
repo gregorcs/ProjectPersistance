@@ -15,9 +15,9 @@ public class DaoProduct implements ProductInterface {
 	Connection con = DBConnection.getInstance().getDBcon();
 	
 	public String buildProductInsertString(Product product) {
-		String productInsert = "INSERT INTO Product (name, productId, description, category, countryOfOrigin, minStock, "
+		String productInsert = "INSERT INTO Product (productId, name,  description, category, countryOfOrigin, minStock, "
 				+ "stock, purchasePrice, salesPrice, rentPrice) values "
-				+ "('" + product.getName() + "', '" + product.getProductId() + "', '"
+				+ "('" + product.getProductId() + "', '" + product.getName() + "', '"
 				+ product.getDescription() + "', '" + product.getCategory() + "', '" + product.getCountryOfOrigin()
 				+ "', '" + product.getMinStock() + "', '" + product.getStock() + "', '" + product.getPurchasePrice()
 				+ "', '" + product.getSalesPrice() + "', '" + product.getRentPrice() + "')";
@@ -77,6 +77,15 @@ public class DaoProduct implements ProductInterface {
 				ResultSet rs = stmt.executeQuery();
 				if (rs.next()) {
 					fetchedProduct.setProductId(rs.getString("productId"));
+					fetchedProduct.setName(rs.getString("name"));
+					fetchedProduct.setDescription(rs.getString("description"));
+					fetchedProduct.setCategory(rs.getString("category"));
+					fetchedProduct.setCountryOfOrigin(rs.getString("countryOfOrigin"));
+					fetchedProduct.setMinStock(rs.getInt("minStock"));
+					fetchedProduct.setStock(rs.getInt("stock"));
+					fetchedProduct.setPurchasePrice(rs.getFloat("purchasePrice"));
+					fetchedProduct.setSalesPrice(rs.getFloat("salesPrice"));
+					fetchedProduct.setRentPrice(rs.getFloat("rentPrice"));
 				}
 				
 			} catch (SQLException e) {
