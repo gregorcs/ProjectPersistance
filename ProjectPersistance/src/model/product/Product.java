@@ -1,5 +1,7 @@
 package model.product;
 
+import java.util.ArrayList;
+
 public abstract class Product {
 
 	private String productId;
@@ -15,6 +17,8 @@ public abstract class Product {
 	
 	private String supplierId;
 	
+	private ArrayList<Product> productDB;
+	
 	public Product(String name, String productId, String description, String category, String countryOfOrigin, int minStock, int stock,
 			float purchasePrice, float salesPrice, float rentPrice) {
 		super();
@@ -28,6 +32,10 @@ public abstract class Product {
 		this.salesPrice = salesPrice;
 		this.rentPrice = rentPrice;
 		this.productId = productId;
+	}
+	
+	public Product() {
+		
 	}
 	
 	public String getName() {
@@ -100,6 +108,12 @@ public abstract class Product {
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
-	
-	
+
+	public ArrayList<Product> getProductDB() {
+		return productDB;
+	}
+
+	public void setProductDB(ArrayList<Product> productDB) {
+		this.productDB = productDB;
+	}
 }

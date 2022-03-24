@@ -9,7 +9,7 @@ public class Customer {
 	private String city;
 	private String phoneNumber;
 	
-	public Customer(String customerId, String name, String address, String zipcode, String city, String phoneNumber, String string) {
+	public Customer(String customerId, String name, String address, String zipcode, String city, String phoneNumber) {
 		super();
 		this.customerId = customerId;
 		this.name = name;
@@ -26,6 +26,10 @@ public class Customer {
 		this.zipcode = zipcode;
 		this.city = city;
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public Customer() {
+		
 	}
 
 	public String getName() {
