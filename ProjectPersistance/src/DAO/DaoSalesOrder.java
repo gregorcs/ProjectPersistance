@@ -90,8 +90,6 @@ public class DaoSalesOrder implements SalesOrderInterface{
 			ResultSet rs = stmt.getGeneratedKeys();
 			
 			for (LineItem lineItem : salesOrder.getItemsToBuy()) {
-				System.out.println("==================");
-				System.out.println("sending: " + lineItem.getSaleOrder().getOrderId());
 				String lineItemInsert = buildLineItemString(lineItem);
 				stmt.executeUpdate(lineItemInsert);
 				PreparedStatement updateItem = buildProductUpdateString(lineItem.getQuantity(), lineItem.getProduct().getProductId());

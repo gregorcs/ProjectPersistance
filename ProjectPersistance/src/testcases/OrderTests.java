@@ -19,7 +19,7 @@ class OrderTests {
 
 	DBConnection con = DBConnection.getInstance();
 	
-	@Test
+
 	public void OrderWassAdded() {
 		//Arrange
 		boolean isCorrect = true;
@@ -83,7 +83,7 @@ class OrderTests {
 	public void OrderWasFoundById() {
 		//Arrange
 		boolean isCorrect = true;
-		String idToBeFound = "569";
+		String idToBeFound = "580";
 		DaoSalesOrder salesOrderDao = new DaoSalesOrder();
 		SalesOrder foundOrder = new SalesOrder();
 		//Act
@@ -97,7 +97,7 @@ class OrderTests {
 		}
 		System.out.print(foundOrder.getCustomerId());
 		System.out.print(foundOrder.getDeliveryDate());
-		System.out.print(foundOrder.getItemsToBuy().get(0).getQuantity());
+		//System.out.print(foundOrder.getItemsToBuy().get(0).getQuantity());
 		//Assert
 		assertEquals(idToBeFound, foundOrder.getOrderId());
 		assertTrue(isCorrect);
