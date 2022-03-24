@@ -19,7 +19,6 @@ class OrderTests {
 
 	DBConnection con = DBConnection.getInstance();
 	
-	@Test
 	public void OrderWassAdded() {
 		//Arrange
 		boolean isCorrect = true;
@@ -36,8 +35,8 @@ class OrderTests {
 		itemsToBuy.add(lineItem);
 		
 		//assembling saleorder
-		SalesOrder salesOrder = new SalesOrder(4266, "on its way", "2022-04-24", customer, employee, itemsToBuy);
-		salesOrder.setOrderId("567");
+		SalesOrder salesOrder = new SalesOrder("234", "on its way", "2022-04-24", "543", "234", itemsToBuy);
+		salesOrder.setOrderId("569");
 		//Act
 		try {
 			salesOrderDao.create(salesOrder);
@@ -50,4 +49,23 @@ class OrderTests {
 		assertTrue(isCorrect);
 	}
 
+	@Test
+	public void OrderWasFoundById() {
+		//Arrange
+		boolean isCorrect = true;
+		String idToBeFound = "569";
+		DaoSalesOrder salesOrderDao = new DaoSalesOrder();
+		SalesOrder foundOrder = new SalesOrder();
+		//Act
+		try {
+			foundOrder = salesOrderDao.read(idToBeFound);
+		} catch (Exception e) {
+			e.printStackTrace();
+			isCorrect = false;
+			System.out.println(e.getMessage());
+		}
+		//Assert
+		assertEquals(idToBeFound, foundOrder.getOrderId());
+		assertTrue(isCorrect);
+	}
 }

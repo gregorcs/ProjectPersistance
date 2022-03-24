@@ -4,56 +4,57 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import model.person.Customer;
-import model.person.Employee;
-
 public class SalesOrder {
 
 	private String orderId;
 	
 	private String date;
-	private int amount;
+	private String amount;
 	private String deliveryStatus;
 	private String deliveryDate;
 	
-	private Customer customer;
-	private Employee employee;
+	private String customerId;
+	private String employeeId;
 	private Invoice invoice;
 	
 	private ArrayList<LineItem> itemsToBuy;
 	
-	public SalesOrder(String date, int amount, String deliveryStatus, String deliveryDate, Customer customer,
-			Employee employee) {
+	public SalesOrder(String date, String amount, String deliveryStatus, String deliveryDate, String customer,
+			String employee) {
 		super();
 		this.date = date;
 		this.amount = amount;
 		this.deliveryStatus = deliveryStatus;
 		this.deliveryDate = deliveryDate;
-		this.customer = customer;
-		this.employee = employee;
+		this.customerId = customer;
+		this.employeeId = employee;
 	}
 	
-	public SalesOrder(int amount, String deliveryStatus, String deliveryDate, Customer customer, Employee employee, ArrayList<LineItem> itemsToBuy) {
+	public SalesOrder(String amount, String deliveryStatus, String deliveryDate, String customer, String employee, ArrayList<LineItem> itemsToBuy) {
 		super();
 		this.date = createDate();
 		this.amount = amount;
 		this.deliveryStatus = deliveryStatus;
 		this.deliveryDate = deliveryDate;
-		this.customer = customer;
-		this.employee = employee;
+		this.customerId = customer;
+		this.employeeId = employee;
 		this.itemsToBuy = itemsToBuy;
+	}
+
+	public SalesOrder() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getDate() {
 		return date;
 	}
-	public void String (String date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
-	public int getAmount() {
+	public String getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 	public String getDeliveryStatus() {
@@ -68,17 +69,17 @@ public class SalesOrder {
 	public void setDeliveryDate(String deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
-	public Customer getCustomer() {
-		return customer;
+	public String getCustomerId() {
+		return customerId;
 	}
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerId(String customer) {
+		this.customerId = customer;
 	}
-	public Employee getEmployee() {
-		return employee;
+	public String getEmployeeId() {
+		return employeeId;
 	}
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setEmployeeId(String employee) {
+		this.employeeId = employee;
 	}
 	public Invoice getInvoice() {
 		return invoice;
@@ -97,14 +98,7 @@ public class SalesOrder {
 	public void setItemsToBuy(ArrayList<LineItem> itemsToBuy) {
 		this.itemsToBuy = itemsToBuy;
 	}
-	
-	public String getCustomerId() {
-		return customer.getCustomerId();
-	}
-	
-	public String getEmployeeId() {
-		return employee.getEmployeeId();
-	}
+
 	public String getOrderId() {
 		return orderId;
 	}
