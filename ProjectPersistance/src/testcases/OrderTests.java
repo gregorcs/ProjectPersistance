@@ -36,12 +36,11 @@ class OrderTests {
 		itemsToBuy.add(lineItem);
 		
 		//assembling saleorder
-		@SuppressWarnings("deprecation")
-		SalesOrder salesOrder = new SalesOrder(4564, "on its way", /*new Date("2022, 04, 24"),*/ customer, employee, itemsToBuy);
-		salesOrder.setOrderId("53675");
+		SalesOrder salesOrder = new SalesOrder(4266, "on its way", "2022-04-24", customer, employee, itemsToBuy);
+		salesOrder.setOrderId("567");
 		//Act
 		try {
-			salesOrderDao.insertSalesOrder(salesOrder);
+			salesOrderDao.create(salesOrder);
 		} catch (Exception e) {
 			e.printStackTrace();
 			isCorrect = false;

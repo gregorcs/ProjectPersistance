@@ -14,7 +14,7 @@ public class SalesOrder {
 	private String date;
 	private int amount;
 	private String deliveryStatus;
-	private Date deliveryDate;
+	private String deliveryDate;
 	
 	private Customer customer;
 	private Employee employee;
@@ -22,7 +22,7 @@ public class SalesOrder {
 	
 	private ArrayList<LineItem> itemsToBuy;
 	
-	public SalesOrder(String date, int amount, String deliveryStatus, Date deliveryDate, Customer customer,
+	public SalesOrder(String date, int amount, String deliveryStatus, String deliveryDate, Customer customer,
 			Employee employee) {
 		super();
 		this.date = date;
@@ -33,7 +33,7 @@ public class SalesOrder {
 		this.employee = employee;
 	}
 	
-	public SalesOrder(int amount, String deliveryStatus, /*Date deliveryDate,*/ Customer customer, Employee employee, ArrayList<LineItem> itemsToBuy) {
+	public SalesOrder(int amount, String deliveryStatus, String deliveryDate, Customer customer, Employee employee, ArrayList<LineItem> itemsToBuy) {
 		super();
 		this.date = createDate();
 		this.amount = amount;
@@ -62,10 +62,10 @@ public class SalesOrder {
 	public void setDeliveryStatus(String deliveryStatus) {
 		this.deliveryStatus = deliveryStatus;
 	}
-	public Date getDeliveryDate() {
+	public String getDeliveryDate() {
 		return deliveryDate;
 	}
-	public void setDeliveryDate(Date deliveryDate) {
+	public void setDeliveryDate(String deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
 	public Customer getCustomer() {
@@ -112,7 +112,7 @@ public class SalesOrder {
 		this.orderId = orderId;
 	}
 	
-	public String  createDate() {
+	public String createDate() {
 	    SimpleDateFormat formatter = new SimpleDateFormat("YYYY/MM/dd");  
 	    Date date = new Date();  
 	    return formatter.format(date);  

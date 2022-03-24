@@ -5,23 +5,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import DAO.interfaces.SalesOrderInterface;
 import model.order.SalesOrder;
 
-public class DaoSalesOrder {
+public class DaoSalesOrder implements SalesOrderInterface{
 	
 	Connection con = DBConnection.getInstance().getDBcon();
 
-	private String buildSalesOrderInsertString(SalesOrder salesOrder) {
+	@Override
+	public String buildSalesOrderInsertString(SalesOrder salesOrder) {
 		String salesOrderInsert = "INSERT INTO SaleOrder (orderId, employeeId, customerId, date, amount, deliveryStatus, deliveryDate) values ";
 		salesOrderInsert += "('" + salesOrder.getOrderId() + "', '" + salesOrder.getEmployeeId() + "', '" + salesOrder.getCustomerId() + "', '" 
-		+ "2022/03/24" + "', '" + salesOrder.getAmount()
-		+ "', '" + salesOrder.getDeliveryStatus() + "', '" + "2022/03/28" + "')";
+		+ salesOrder.getDate() + "', '" + salesOrder.getAmount()
+		+ "', '" + salesOrder.getDeliveryStatus() + "', '" + salesOrder.getDeliveryDate() + "')";
 		
 		System.out.println(salesOrderInsert);
 		return salesOrderInsert;
 	}
 	
-	public int insertSalesOrder(SalesOrder salesOrder) throws Exception {
+	public int create(SalesOrder salesOrder) throws Exception {
 		String salesOrderInsert = buildSalesOrderInsertString(salesOrder);
 		int insertedKey = 1;
 		
@@ -45,7 +47,6 @@ public class DaoSalesOrder {
 			insertedKey = -3;
 			throw new Exception("Technical error");
 		} finally {
-			//what exactly happens if you close con here instead?
 			DBConnection.closeConnection();
 		}
 		
