@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import DAO.interfaces.SalesOrderInterface;
+import model.order.LineItem;
 import model.order.SalesOrder;
 
 public class DaoSalesOrder implements SalesOrderInterface{
@@ -16,6 +18,7 @@ public class DaoSalesOrder implements SalesOrderInterface{
 
 	
 	public String buildSalesOrderInsertString(SalesOrder salesOrder) {
+		//not good because of sql injection, would fix
 		String salesOrderInsert = "INSERT INTO SaleOrder (orderId, employeeId, customerId, date, amount, deliveryStatus, deliveryDate) values ";
 		salesOrderInsert += "('" + salesOrder.getOrderId() + "', '" + salesOrder.getEmployeeId() + "', '" + salesOrder.getCustomerId() + "', '" 
 		+ salesOrder.getDate() + "', '" + salesOrder.getAmount()
@@ -38,6 +41,44 @@ public class DaoSalesOrder implements SalesOrderInterface{
 		return stmt;
 	}
 	
+	public PreparedStatement buildReadLineItemString(String orderId) {
+		String readOrder = "SELECT * FROM LineItem WHERE orderId = ?";
+		PreparedStatement stmt = null;
+		try {
+			stmt = con.prepareStatement(readOrder);
+			stmt.setString(1, orderId);
+		} catch (SQLException e) {
+			System.out.println(e + " Assembling prepared statement went wrong");
+			e.printStackTrace();
+		}
+		return stmt;
+	}
+	
+	public String buildLineItemString(LineItem lineItem) {
+		//this should throw an error
+		String lineItemInsert = "INSERT INTO LineItem (orderId, productId, quantity) values ";
+		lineItemInsert += "('" + lineItem.getSaleOrder().getOrderId() + "', '" + lineItem.getProduct().getProductId()+ "', '" 
+		+ lineItem.getQuantity() + "')";
+		System.out.println(lineItemInsert);
+		
+		return lineItemInsert;
+	}
+
+	
+	public PreparedStatement buildProductUpdateString(int quantity, String productId) {
+		String updateProduct = "UPDATE Product SET stock = stock - ? WHERE id = ?";
+		PreparedStatement stmt = null;
+		try {
+			stmt = con.prepareStatement(updateProduct);
+			stmt.setString(1, Integer.toString(quantity));
+			stmt.setString(2, productId);
+		} catch (SQLException e) {
+			System.out.println(e + " Assembling prepared statement went wrong");
+			e.printStackTrace();
+		}
+		return stmt;
+	}
+	
 	@Override
 	public int create(SalesOrder salesOrder) throws Exception {
 		String salesOrderInsert = buildSalesOrderInsertString(salesOrder);
@@ -48,14 +89,19 @@ public class DaoSalesOrder implements SalesOrderInterface{
 			stmt.executeUpdate(salesOrderInsert, Statement.RETURN_GENERATED_KEYS);
 			ResultSet rs = stmt.getGeneratedKeys();
 			
+			for (LineItem lineItem : salesOrder.getItemsToBuy()) {
+				String lineItemInsert = buildLineItemString(lineItem);
+				stmt.executeUpdate(lineItemInsert);
+				PreparedStatement updateItem = buildProductUpdateString(lineItem.getQuantity(), lineItem.getProduct().getProductId());
+				updateItem.executeUpdate();
+			}
+			
 			while (rs.next()) {
 				insertedKey = rs.getInt(1);
 			}
 			
 		} catch (SQLException e) {
 			insertedKey = -1;
-			//these Exceptions should be replaced by my own ex: DatabaseLayerException
-			throw new Exception("SQL exception");
 		} catch (NullPointerException e) {
 			insertedKey = -2;
 			throw new Exception("Null pointer exception, possible connection problems");
@@ -63,12 +109,13 @@ public class DaoSalesOrder implements SalesOrderInterface{
 			insertedKey = -3;
 			throw new Exception("Technical error");
 		} finally {
+			con.setAutoCommit(true);
 			DBConnection.closeConnection();
 		}
 		
 		return insertedKey;
 	}
-
+	
 	@Override
 	public SalesOrder read(String id) throws Exception {
 		PreparedStatement stmt = buildReadSalesOrderString(id);
