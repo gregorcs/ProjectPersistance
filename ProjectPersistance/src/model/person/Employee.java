@@ -5,6 +5,12 @@ public class Employee {
 	private String name;
 	private String employeeId;
 
+	public Employee(String name, String employeeId) {
+		super();
+		this.name = name;
+		this.employeeId = employeeId;
+	}
+
 	public String getName() {
 		return name;
 	}

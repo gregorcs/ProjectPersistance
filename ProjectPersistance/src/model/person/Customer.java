@@ -9,6 +9,25 @@ public class Customer {
 	private String city;
 	private String phoneNumber;
 	
+	public Customer(String customerId, String name, String address, String zipcode, String city, String phoneNumber, String string) {
+		super();
+		this.customerId = customerId;
+		this.name = name;
+		this.address = address;
+		this.zipcode = zipcode;
+		this.city = city;
+		this.phoneNumber = phoneNumber;
+	}
+
+	public Customer(String name, String address, String zipcode, String city, String phoneNumber) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.zipcode = zipcode;
+		this.city = city;
+		this.phoneNumber = phoneNumber;
+	}
+
 	public String getName() {
 		return name;
 	}

@@ -1,3 +1,4 @@
+package DAO;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -7,11 +8,11 @@ import java.sql.DriverManager;
 public class DBConnection {   
 	//Constants used to get access to the database
 	
-	private static final String  driver = "jdbc:sqlserver://DESKTOP-EF8K8K4\\SQLEXPRESS";;
-    private static final String  databaseName = ";databaseName=CarRental;encrypt=false";
+	private static final String  driver = "jdbc:sqlserver://hildur.ucn.dk:1433";;
+    private static final String  databaseName = ";databaseName=CSC-CSD-S212_10407535;encrypt=false";
     
-    private static String  userName = "; user=gregor";
-    private static String password = ";password=greg";
+    private static String  userName = "; user=CSC-CSD-S212_10407535";
+    private static String password = ";password=Password1!";
    
     private DatabaseMetaData dma;
     private static Connection con;

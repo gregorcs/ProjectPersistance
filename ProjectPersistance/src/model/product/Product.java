@@ -2,6 +2,7 @@ package model.product;
 
 public abstract class Product {
 
+	private String productId;
 	private String name;
 	private String description;
 	private String category;
@@ -14,7 +15,7 @@ public abstract class Product {
 	
 	private String supplierId;
 	
-	public Product(String name, String description, String category, String countryOfOrigin, int minStock, int stock,
+	public Product(String name, String productId, String description, String category, String countryOfOrigin, int minStock, int stock,
 			float purchasePrice, float salesPrice, float rentPrice) {
 		super();
 		this.name = name;
@@ -26,6 +27,7 @@ public abstract class Product {
 		this.purchasePrice = purchasePrice;
 		this.salesPrice = salesPrice;
 		this.rentPrice = rentPrice;
+		this.productId = productId;
 	}
 	
 	public String getName() {
@@ -89,6 +91,14 @@ public abstract class Product {
 
 	public void setSupplierId(String supplierId) {
 		this.supplierId = supplierId;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
 	}
 	
 	

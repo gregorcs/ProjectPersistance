@@ -8,6 +8,12 @@ public class LineItem {
 	private Product product;
 	private SalesOrder saleOrder;
 	
+	public LineItem(int quantity, Product product) {
+		super();
+		this.quantity = quantity;
+		this.product = product;
+	}
+
 	public int getQuantity() {
 		return quantity;
 	}

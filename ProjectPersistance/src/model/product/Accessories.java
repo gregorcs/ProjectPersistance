@@ -6,10 +6,10 @@ public class Accessories extends Product {
 	private String material;
 	private String color;
 	
-	public Accessories(String name, String description, String category, String countryOfOrigin, int minStock,
+	public Accessories(String name, String productId, String description, String category, String countryOfOrigin, int minStock,
 			int stock, float purchasePrice, float salesPrice, float rentPrice, int size, String material,
 			String color) {
-		super(name, description, category, countryOfOrigin, minStock, stock, purchasePrice, salesPrice, rentPrice);
+		super(name, productId, description, category, countryOfOrigin, minStock, stock, purchasePrice, salesPrice, rentPrice);
 		this.size = size;
 		this.material = material;
 		this.color = color;

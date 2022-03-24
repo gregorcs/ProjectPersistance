@@ -7,10 +7,10 @@ public class Clothing extends Product {
 	private String material;
 	private String color;
 	
-	public Clothing(String name, String description, String category, String countryOfOrigin, int minStock, int stock,
+	public Clothing(String name, String productId, String description, String category, String countryOfOrigin, int minStock, int stock,
 			float purchasePrice, float salesPrice, float rentPrice, int size, String gender, String material,
 			String color) {
-		super(name, description, category, countryOfOrigin, minStock, stock, purchasePrice, salesPrice, rentPrice);
+		super(name, productId, description, category, countryOfOrigin, minStock, stock, purchasePrice, salesPrice, rentPrice);
 		this.size = size;
 		this.gender = gender;
 		this.material = material;

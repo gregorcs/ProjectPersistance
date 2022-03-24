@@ -1,5 +1,6 @@
 package model.order;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,7 +9,9 @@ import model.person.Employee;
 
 public class SalesOrder {
 
-	private Date date;
+	private String orderId;
+	
+	private String date;
 	private int amount;
 	private String deliveryStatus;
 	private Date deliveryDate;
@@ -19,10 +22,32 @@ public class SalesOrder {
 	
 	private ArrayList<LineItem> itemsToBuy;
 	
-	public Date getDate() {
+	public SalesOrder(String date, int amount, String deliveryStatus, Date deliveryDate, Customer customer,
+			Employee employee) {
+		super();
+		this.date = date;
+		this.amount = amount;
+		this.deliveryStatus = deliveryStatus;
+		this.deliveryDate = deliveryDate;
+		this.customer = customer;
+		this.employee = employee;
+	}
+	
+	public SalesOrder(int amount, String deliveryStatus, /*Date deliveryDate,*/ Customer customer, Employee employee, ArrayList<LineItem> itemsToBuy) {
+		super();
+		this.date = createDate();
+		this.amount = amount;
+		this.deliveryStatus = deliveryStatus;
+		this.deliveryDate = deliveryDate;
+		this.customer = customer;
+		this.employee = employee;
+		this.itemsToBuy = itemsToBuy;
+	}
+
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void String (String date) {
 		this.date = date;
 	}
 	public int getAmount() {
@@ -61,6 +86,11 @@ public class SalesOrder {
 	public void setInvoice(Invoice invoice) {
 		this.invoice = invoice;
 	}
+	
+	public boolean addLineItem(LineItem lineItem) {
+		return itemsToBuy.add(lineItem);
+	}
+
 	public ArrayList<LineItem> getItemsToBuy() {
 		return itemsToBuy;
 	}
@@ -68,6 +98,23 @@ public class SalesOrder {
 		this.itemsToBuy = itemsToBuy;
 	}
 	
+	public String getCustomerId() {
+		return customer.getCustomerId();
+	}
 	
+	public String getEmployeeId() {
+		return employee.getEmployeeId();
+	}
+	public String getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
 	
+	public String  createDate() {
+	    SimpleDateFormat formatter = new SimpleDateFormat("YYYY/MM/dd");  
+	    Date date = new Date();  
+	    return formatter.format(date);  
+	}
 }

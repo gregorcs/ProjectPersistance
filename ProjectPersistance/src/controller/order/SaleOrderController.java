@@ -9,7 +9,7 @@ public class SaleOrderController {
 	private Invoice invoice;
 	
 	public void createSalesOrder() {
-		order = new SalesOrder();
+		//order = new SalesOrder();
 	}
 	
 	public void createInvoice() {
