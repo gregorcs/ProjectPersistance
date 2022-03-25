@@ -11,14 +11,12 @@ public class SaleOrderController {
 	private SalesOrder order;
 	private DaoSalesOrder salesOrderDao;
 	//bad orderId here
-	private int orderId = 602;
 	
-	public void createSalesOrder(float amount, String deliveryStatus, String deliveryDate, String customerId, String employeeId, ArrayList<LineItem> itemsToBuy) {
-		order = new SalesOrder( amount,  deliveryStatus,  deliveryDate,  customerId,  employeeId, itemsToBuy);
+	public void createSalesOrder(SalesOrder order) { //float amount, String deliveryStatus, String deliveryDate, String customerId, String employeeId, ArrayList<LineItem> itemsToBuy
+		//order = new SalesOrder( amount,  deliveryStatus,  deliveryDate,  customerId,  employeeId, itemsToBuy);
 		
 		try {
 			salesOrderDao = new DaoSalesOrder();
-			order.setOrderId(Integer.toString(orderId));
 			salesOrderDao.create(order);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -39,16 +39,16 @@ public class MainMenu {
 	private Scanner scanner;
 	private ProductController prodControl;
 	private Product product;
-	private ArrayList<LineItem> basket;
 
 	private String employeeId = "234";
 	private String customerId = "543";
 	private String deliveryStatus = "preparing";
 	private String deliveryDate = "2022/03/25";
+	private String orderId = "705";
 	
 	
 	public void createNewOrder() {
-		basket = new ArrayList<LineItem>();
+		SalesOrder order = new SalesOrder();		
 		prodControl = new ProductController();
 		scanner = new Scanner(System.in);
 		SaleOrderController orderControl = new SaleOrderController();
@@ -62,13 +62,18 @@ public class MainMenu {
 
 		while (choice != 3) {
 			
-			if (!basket.isEmpty()) {
+			if (!order.getItemsToBuy().isEmpty()) {
 				System.out.println("Do you want to check out? 1. Yes 2. No");
 				choice = scanner.nextInt();
 				if (choice == 1) {
-					System.out.println(basket.get(0).getProduct().getName());
-					orderControl.createSalesOrder(finalAmount, deliveryStatus, deliveryDate, 
-							customerId, employeeId, basket);
+					System.out.println(order.getItemsToBuy().get(0).getProduct().getName());
+					order.setAmount(finalAmount);
+					order.setOrderId(orderId);
+					order.setDeliveryStatus(deliveryStatus);
+					order.setDeliveryDate(deliveryDate);
+					order.setCustomerId(customerId);
+					order.setEmployeeId(employeeId);
+					orderControl.createSalesOrder(order);
 				} else {
 					continue;
 				}
@@ -100,7 +105,8 @@ public class MainMenu {
 						quantity = scanner.nextInt();
 						scanner.nextLine();
 						LineItem lineItem = new LineItem(quantity, product);
-						basket.add(lineItem);
+						order.addLineItem(lineItem);
+						lineItem.setSaleOrder(order);
 						break;
 					default:
 						break;

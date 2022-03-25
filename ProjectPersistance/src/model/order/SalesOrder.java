@@ -42,7 +42,8 @@ public class SalesOrder {
 	}
 
 	public SalesOrder() {
-		// TODO Auto-generated constructor stub
+		itemsToBuy = new ArrayList<LineItem>();
+		this.date = createDate();
 	}
 
 	public String getDate() {
