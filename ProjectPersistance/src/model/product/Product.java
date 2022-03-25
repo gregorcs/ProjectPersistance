@@ -2,7 +2,7 @@ package model.product;
 
 import java.util.ArrayList;
 
-public abstract class Product {
+public class Product {
 
 	private String productId;
 	private String name;
@@ -34,6 +34,10 @@ public abstract class Product {
 		this.productId = productId;
 	}
 	
+	public Product() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getName() {
 		return name;
 	}

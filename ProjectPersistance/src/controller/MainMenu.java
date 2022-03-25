@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import DAO.DaoCustomer;
 
+/*
 public class MainMenu {
 
 	public void MainMenu() {
@@ -23,6 +24,7 @@ public class MainMenu {
                   break;
             }
         }
+        */
 import java.util.ArrayList;
 import java.util.Scanner;
 

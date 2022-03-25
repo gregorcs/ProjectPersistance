@@ -15,7 +15,7 @@ public class DaoProduct implements ProductInterface {
 	Connection con = DBConnection.getInstance().getDBcon();
 	
 	public String buildProductInsertString(Product product) {
-		String productInsert = "INSERT INTO Product (productId, name,  description, category, countryOfOrigin, minStock, "
+		String productInsert = "INSERT INTO Product (id, name,  description, category, countryOfOrigin, minStock, "
 				+ "stock, purchasePrice, salesPrice, rentPrice) values "
 				+ "('" + product.getProductId() + "', '" + product.getName() + "', '"
 				+ product.getDescription() + "', '" + product.getCategory() + "', '" + product.getCountryOfOrigin()
@@ -27,11 +27,11 @@ public class DaoProduct implements ProductInterface {
 		}
 		
 		public PreparedStatement buildReadProductString(String id) {
-			String readProduct = "SELECT * FROM Product WHERE productId = ?";
+			String readProduct = "SELECT * FROM Product WHERE id = 0204";
 			PreparedStatement stmt = null;
 			try {
 				stmt = con.prepareStatement(readProduct);
-				stmt.setString(1, id);
+				//stmt.setString(1, id);
 			} catch (SQLException e) {
 				System.out.println(e + " Assembling prepared statement went wrong");
 				e.printStackTrace();
@@ -71,12 +71,13 @@ public class DaoProduct implements ProductInterface {
 
 		public Product read(String id) throws Exception {
 			PreparedStatement stmt = buildReadProductString(id);
-			Product fetchedProduct = null;
+			Product fetchedProduct = new Product();
 			
 			try {
 				ResultSet rs = stmt.executeQuery();
 				if (rs.next()) {
-					fetchedProduct.setProductId(rs.getString("productId"));
+					
+					fetchedProduct.setProductId(rs.getString("id"));
 					fetchedProduct.setName(rs.getString("name"));
 					fetchedProduct.setDescription(rs.getString("description"));
 					fetchedProduct.setCategory(rs.getString("category"));
@@ -86,6 +87,7 @@ public class DaoProduct implements ProductInterface {
 					fetchedProduct.setPurchasePrice(rs.getFloat("purchasePrice"));
 					fetchedProduct.setSalesPrice(rs.getFloat("salesPrice"));
 					fetchedProduct.setRentPrice(rs.getFloat("rentPrice"));
+					
 				}
 				
 			} catch (SQLException e) {
