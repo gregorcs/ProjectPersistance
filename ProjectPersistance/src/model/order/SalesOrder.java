@@ -9,7 +9,7 @@ public class SalesOrder {
 	private String orderId;
 	
 	private String date;
-	private String amount;
+	private float amount;
 	private String deliveryStatus;
 	private String deliveryDate;
 	
@@ -19,7 +19,7 @@ public class SalesOrder {
 	
 	private ArrayList<LineItem> itemsToBuy;
 	
-	public SalesOrder(String date, String amount, String deliveryStatus, String deliveryDate, String customer,
+	public SalesOrder(String date, float amount, String deliveryStatus, String deliveryDate, String customer,
 			String employee) {
 		super();
 		this.date = date;
@@ -30,7 +30,7 @@ public class SalesOrder {
 		this.employeeId = employee;
 	}
 	
-	public SalesOrder(String amount, String deliveryStatus, String deliveryDate, String customerId, String employeeId, ArrayList<LineItem> itemsToBuy) {
+	public SalesOrder(float amount, String deliveryStatus, String deliveryDate, String customerId, String employeeId, ArrayList<LineItem> itemsToBuy) {
 		super();
 		this.date = createDate();
 		this.amount = amount;
@@ -51,10 +51,10 @@ public class SalesOrder {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public String getAmount() {
+	public float getAmount() {
 		return amount;
 	}
-	public void setAmount(String amount) {
+	public void setAmount(float amount) {
 		this.amount = amount;
 	}
 	public String getDeliveryStatus() {

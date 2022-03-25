@@ -32,8 +32,8 @@ class OrderTests {
 		ArrayList<LineItem> itemsToBuy = new ArrayList<LineItem>();
 		
 		//assembling saleorder
-		SalesOrder salesOrder = new SalesOrder("234", "on its way", "2022-04-24", "543", "234", itemsToBuy);
-		salesOrder.setOrderId("589");
+		SalesOrder salesOrder = new SalesOrder(234, "on its way", "2022-04-24", "543", "234", itemsToBuy);
+		salesOrder.setOrderId("591");
 		LineItem lineItem = new LineItem(5, misc, salesOrder);
 		LineItem lineItem1 = new LineItem(10, misc, salesOrder);
 		itemsToBuy.add(lineItem);
@@ -65,7 +65,7 @@ class OrderTests {
 		ArrayList<LineItem> itemsToBuy = new ArrayList<LineItem>();
 		
 		//assembling saleorder
-		SalesOrder salesOrder = new SalesOrder("234", "on its way", "2022-04-24", "543", "234", itemsToBuy);
+		SalesOrder salesOrder = new SalesOrder(234, "on its way", "2022-04-24", "543", "234", itemsToBuy);
 		salesOrder.setOrderId("575");
 		LineItem lineItem = new LineItem(43, misc, salesOrder);
 		itemsToBuy.add(lineItem);

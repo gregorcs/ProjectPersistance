@@ -3,6 +3,7 @@ package controller;
 import java.util.Scanner;
 
 import DAO.DaoCustomer;
+import controller.order.SaleOrderController;
 
 /*
 public class MainMenu {
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.order.LineItem;
+import model.order.SalesOrder;
 import model.person.Customer;
 import model.product.Product;
 
@@ -39,17 +41,41 @@ public class MainMenu {
 	private Product product;
 	private ArrayList<LineItem> basket;
 
+	private String employeeId = "234";
+	private String customerId = "543";
+	private String deliveryStatus = "preparing";
+	private String deliveryDate = "2022/03/25";
+	
+	
 	public void createNewOrder() {
 		basket = new ArrayList<LineItem>();
-		String idToFind;
 		prodControl = new ProductController();
 		scanner = new Scanner(System.in);
+		SaleOrderController orderControl = new SaleOrderController();
+		String idToFind;
+		float finalAmount = 0;
+		
+		
 		System.out.println("Welcome back!");
 
 		int choice = 0;
 
 		while (choice != 3) {
+			
+			if (!basket.isEmpty()) {
+				System.out.println("Do you want to check out? 1. Yes 2. No");
+				choice = scanner.nextInt();
+				if (choice == 1) {
+					System.out.println(basket.get(0).getProduct().getName());
+					orderControl.createSalesOrder(finalAmount, deliveryStatus, deliveryDate, 
+							customerId, employeeId, basket);
+				} else {
+					continue;
+				}
+			}
+			
 			System.out.println("1.To start adding products");
+			
 			System.out.println("3. To terminate");
 			choice = scanner.nextInt();
 			scanner.nextLine();
@@ -63,7 +89,8 @@ public class MainMenu {
 				System.out.println("Stock: " + product.getStock());
 				System.out.println("Productid: " + product.getProductId());
 				System.out.println("1. Add to basket");
-				System.out.println("2. continue without adding");
+				System.out.println("2. Purchase products");
+				System.out.println("10. continue without adding");
 				System.out.println("3. leave");
 				choice = scanner.nextInt();
 	
@@ -72,13 +99,16 @@ public class MainMenu {
 						System.out.println("Enter quantity: ");
 						quantity = scanner.nextInt();
 						scanner.nextLine();
-						basket.add(new LineItem(quantity, product));
+						LineItem lineItem = new LineItem(quantity, product);
+						basket.add(lineItem);
 						break;
 					default:
 						break;
 			}
 			}
+			//calculate final price here
 		}
+		
 	}
 	
 	public void createCustomer() {
