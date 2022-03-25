@@ -34,10 +34,6 @@ public abstract class Product {
 		this.productId = productId;
 	}
 	
-	public Product() {
-		
-	}
-	
 	public String getName() {
 		return name;
 	}
