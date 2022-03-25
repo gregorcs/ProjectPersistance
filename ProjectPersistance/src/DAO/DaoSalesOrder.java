@@ -85,6 +85,7 @@ public class DaoSalesOrder implements SalesOrderInterface{
 		int insertedKey = 1;
 		
 		try {
+		   // con.setAutoCommit(false);
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(salesOrderInsert, Statement.RETURN_GENERATED_KEYS);
 			ResultSet rs = stmt.getGeneratedKeys();
@@ -99,9 +100,21 @@ public class DaoSalesOrder implements SalesOrderInterface{
 			while (rs.next()) {
 				insertedKey = rs.getInt(1);
 			}
+	       // con.commit();
 			
 		} catch (SQLException e) {
 			insertedKey = -1;
+			/*
+			if (con != null) {
+		        try {
+		          System.err.print("Transaction is being rolled back");
+		          con.rollback();
+		        } catch (SQLException excep) {
+		          System.out.println(excep.getMessage());
+		        }
+			}
+			*/
+			System.out.println(e.getMessage());
 		} catch (NullPointerException e) {
 			insertedKey = -2;
 			throw new Exception("Null pointer exception, possible connection problems");

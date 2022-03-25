@@ -27,11 +27,11 @@ public class DaoProduct implements ProductInterface {
 		}
 		
 		public PreparedStatement buildReadProductString(String id) {
-			String readProduct = "SELECT * FROM Product WHERE id = 0204";
+			String readProduct = "SELECT * FROM Product WHERE id = ?";
 			PreparedStatement stmt = null;
 			try {
 				stmt = con.prepareStatement(readProduct);
-				//stmt.setString(1, id);
+				stmt.setString(1, id);
 			} catch (SQLException e) {
 				System.out.println(e + " Assembling prepared statement went wrong");
 				e.printStackTrace();

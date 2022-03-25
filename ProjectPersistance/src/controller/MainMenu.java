@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.order.LineItem;
+import model.person.Customer;
 import model.product.Product;
 
 public class MainMenu {
@@ -39,6 +40,7 @@ public class MainMenu {
 	private ArrayList<LineItem> basket;
 
 	public void createNewOrder() {
+		basket = new ArrayList<LineItem>();
 		String idToFind;
 		prodControl = new ProductController();
 		scanner = new Scanner(System.in);
@@ -47,40 +49,53 @@ public class MainMenu {
 		int choice = 0;
 
 		while (choice != 3) {
-			System.out.println("Enter product id: ");
-			idToFind = scanner.nextLine();
-			product = prodControl.getProduct(idToFind);
-			System.out.println("Name: " + product.getName());
-			System.out.println("Stock: " + product.getStock());
-			System.out.println("1. Add to basket");
-			System.out.println("2. continue without adding");
-			System.out.println("3. leave");
+			System.out.println("1.To start adding products");
+			System.out.println("3. To terminate");
 			choice = scanner.nextInt();
-
-			switch (choice) {
-				case 1: int quantity = 0;
-					System.out.println("Enter quantity: ");
-					quantity = scanner.nextInt();
-					basket.add(new LineItem(quantity, product));
-					break;
-				default:
-					break;
+			scanner.nextLine();
+			if (choice == 3) {
+				break;
+			} else {
+				System.out.println("Enter id to find: ");
+				idToFind = scanner.nextLine();
+				product = prodControl.getProduct(idToFind);
+				System.out.println("Name: " + product.getName());
+				System.out.println("Stock: " + product.getStock());
+				System.out.println("Productid: " + product.getProductId());
+				System.out.println("1. Add to basket");
+				System.out.println("2. continue without adding");
+				System.out.println("3. leave");
+				choice = scanner.nextInt();
+	
+				switch (choice) {
+					case 1: int quantity = 0;
+						System.out.println("Enter quantity: ");
+						quantity = scanner.nextInt();
+						scanner.nextLine();
+						basket.add(new LineItem(quantity, product));
+						break;
+					default:
+						break;
+			}
 			}
 		}
 	}
+	
+	public void createCustomer() {
+		Customer customer = new Customer();
+	}
+    public int MainMenuText() {
+    	Scanner keyboard = new Scanner(System.in);
+        System.out.println("****** Main Menu ******");
+        System.out.println(" (1) Create a New Order");
+        System.out.println(" (0) Quit the Program");
+        System.out.print("\n Choice:");
 
-        public int MainMenuText() {
-        	Scanner keyboard = new Scanner(System.in);
-            System.out.println("****** Main Menu ******");
-            System.out.println(" (1) Create a New Order");
-            System.out.println(" (0) Quit the Program");
-            System.out.print("\n Choice:");
-
-            while (!keyboard.hasNextInt()) {
-                System.out.println("Input must be a number - please try again.");
-                keyboard.nextLine();
-            }
-            int choice = keyboard.nextInt();
-            return choice;
+        while (!keyboard.hasNextInt()) {
+            System.out.println("Input must be a number - please try again.");
+            keyboard.nextLine();
         }
+        int choice = keyboard.nextInt();
+        return choice;
+    }
 }

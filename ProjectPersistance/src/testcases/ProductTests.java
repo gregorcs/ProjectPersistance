@@ -28,7 +28,7 @@ class ProductTests {
 			System.out.println(e.getMessage());
 		}
 		System.out.print(foundProduct.getName());
-		System.out.print(foundProduct.getCategory());
+		System.out.print(foundProduct.getCountryOfOrigin());
 		//System.out.print(foundOrder.getItemsToBuy().get(0).getQuantity());
 		//Assert
 		assertEquals(idToBeFound, foundProduct.getProductId());

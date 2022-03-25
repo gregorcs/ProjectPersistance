@@ -28,6 +28,6 @@ public class CustomerController {
 		
 		id = phoneNumber;
 		
-		DaoCustomer.create(id, name, address, zipcode, city, phoneNumber);
+		//DaoCustomer.create(id, name, address, zipcode, city, phoneNumber);
 	}
 }

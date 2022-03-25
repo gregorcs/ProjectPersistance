@@ -19,7 +19,7 @@ class OrderTests {
 
 	DBConnection con = DBConnection.getInstance();
 	
-
+	@Test
 	public void OrderWassAdded() {
 		//Arrange
 		boolean isCorrect = true;
@@ -33,10 +33,12 @@ class OrderTests {
 		
 		//assembling saleorder
 		SalesOrder salesOrder = new SalesOrder("234", "on its way", "2022-04-24", "543", "234", itemsToBuy);
-		salesOrder.setOrderId("587");
+		salesOrder.setOrderId("589");
 		LineItem lineItem = new LineItem(5, misc, salesOrder);
+		LineItem lineItem1 = new LineItem(10, misc, salesOrder);
 		itemsToBuy.add(lineItem);
-
+		itemsToBuy.add(lineItem1);
+		
 		//Act
 		try {
 			salesOrderDao.create(salesOrder);
@@ -47,6 +49,7 @@ class OrderTests {
 		}
 		//Assert
 		assertTrue(isCorrect);
+		//maybe add an assertequals here that also checks if its inside the db
 	}
 
 	
@@ -79,7 +82,6 @@ class OrderTests {
 	}
 
 	
-	@Test
 	public void OrderWasFoundById() {
 		//Arrange
 		boolean isCorrect = true;
