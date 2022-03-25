@@ -71,7 +71,7 @@ public class DaoProduct implements ProductInterface {
 
 		public Product read(String id) throws Exception {
 			PreparedStatement stmt = buildReadProductString(id);
-			Product fetchedProduct = new Product();
+			Product fetchedProduct = null;
 			
 			try {
 				ResultSet rs = stmt.executeQuery();

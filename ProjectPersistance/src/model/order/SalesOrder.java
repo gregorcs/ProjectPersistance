@@ -30,14 +30,14 @@ public class SalesOrder {
 		this.employeeId = employee;
 	}
 	
-	public SalesOrder(String amount, String deliveryStatus, String deliveryDate, String customer, String employee, ArrayList<LineItem> itemsToBuy) {
+	public SalesOrder(String amount, String deliveryStatus, String deliveryDate, String customerId, String employeeId, ArrayList<LineItem> itemsToBuy) {
 		super();
 		this.date = createDate();
 		this.amount = amount;
 		this.deliveryStatus = deliveryStatus;
 		this.deliveryDate = deliveryDate;
-		this.customerId = customer;
-		this.employeeId = employee;
+		this.customerId = customerId;
+		this.employeeId = employeeId;
 		this.itemsToBuy = itemsToBuy;
 	}
 
