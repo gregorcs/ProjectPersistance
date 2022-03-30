@@ -18,7 +18,6 @@ public class DaoSalesOrder implements SalesOrderInterface{
 
 	
 	public String buildSalesOrderInsertString(SalesOrder salesOrder) {
-		//not good because of sql injection, would fix
 		String salesOrderInsert = "INSERT INTO SaleOrder (orderId, employeeId, customerId, date, amount, deliveryStatus, deliveryDate) values ";
 		salesOrderInsert += "('" + salesOrder.getOrderId() + "', '" + salesOrder.getEmployeeId() + "', '" + salesOrder.getCustomerId() + "', '" 
 		+ salesOrder.getDate() + "', '" + salesOrder.getAmount()
@@ -35,9 +34,11 @@ public class DaoSalesOrder implements SalesOrderInterface{
 			stmt = con.prepareStatement(readOrder);
 			stmt.setString(1, id);
 		} catch (SQLException e) {
+			System.out.println(id + "abc");
 			System.out.println(e + " Assembling prepared statement went wrong");
 			e.printStackTrace();
 		}
+		System.out.println(readOrder);
 		return stmt;
 	}
 	
