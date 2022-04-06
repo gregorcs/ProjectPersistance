@@ -25,7 +25,7 @@ class OrderTests {
 	public void OrderWassAdded() {
 		//Arrange
 		boolean isCorrect = true;
-		String orderId = "1039";
+		String orderId = "1049";
 		DaoSalesOrder salesOrderDao = new DaoSalesOrder();
 		SalesOrder orderToBeFound = new SalesOrder();
 		
@@ -83,7 +83,7 @@ class OrderTests {
 		itemsToBuy.add(lineItem);
 		//Act
 		try {
-			//salesOrderDao.createLineItem(lineItem);
+		//	salesOrderDao.createLineItem(lineItem);
 		} catch (Exception e) {
 			e.printStackTrace();
 			isCorrect = false;

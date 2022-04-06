@@ -16,7 +16,6 @@ public class DaoSalesOrder implements SalesOrderInterface{
 	
 	Connection con = DBConnection.getInstance().getDBcon();
 
-	
 	public String buildSalesOrderInsertString(SalesOrder salesOrder) {
 		String salesOrderInsert = "INSERT INTO SaleOrder (orderId, employeeId, customerId, date, amount, deliveryStatus, deliveryDate) values ";
 		salesOrderInsert += "('" + salesOrder.getOrderId() + "', '" + salesOrder.getEmployeeId() + "', '" + salesOrder.getCustomerId() + "', '" 
@@ -27,7 +26,7 @@ public class DaoSalesOrder implements SalesOrderInterface{
 		return salesOrderInsert;
 	}
 	
-	public PreparedStatement buildReadSalesOrderString(String id) {
+	private PreparedStatement buildReadSalesOrderString(String id) {
 		String readOrder = "SELECT * FROM SaleOrder WHERE orderId = ?";
 		PreparedStatement stmt = null;
 		try {
@@ -42,7 +41,7 @@ public class DaoSalesOrder implements SalesOrderInterface{
 		return stmt;
 	}
 	
-	public PreparedStatement buildReadLineItemString(String orderId) {
+	private PreparedStatement buildReadLineItemString(String orderId) {
 		String readOrder = "SELECT * FROM LineItem WHERE orderId = ?";
 		PreparedStatement stmt = null;
 		try {
@@ -86,7 +85,7 @@ public class DaoSalesOrder implements SalesOrderInterface{
 		int insertedKey = 1;
 		
 		try {
-		   // con.setAutoCommit(false);
+		    con.setAutoCommit(false);
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate(salesOrderInsert, Statement.RETURN_GENERATED_KEYS);
 			ResultSet rs = stmt.getGeneratedKeys();
@@ -96,16 +95,18 @@ public class DaoSalesOrder implements SalesOrderInterface{
 				stmt.executeUpdate(lineItemInsert);
 				PreparedStatement updateItem = buildProductUpdateString(lineItem.getQuantity(), lineItem.getProduct().getProductId());
 				updateItem.executeUpdate();
+				con.commit();
 			}
-			
+			/*
 			while (rs.next()) {
 				insertedKey = rs.getInt(1);
 			}
-	     //   con.commit();
-			
+			*/
 		} catch (SQLException e) {
 			insertedKey = -1;
 			System.out.println(e.getMessage());
+			con.rollback();
+			System.out.println("Transaction is being rolled back");
 		} catch (NullPointerException e) {
 			insertedKey = -2;
 			throw new Exception(e.getMessage() + "Null pointer exception, possible connection problems");

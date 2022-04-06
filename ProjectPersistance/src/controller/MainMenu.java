@@ -19,7 +19,7 @@ public class MainMenu {
 	private String customerId = "543";
 	private String deliveryStatus = "preparing";
 	private String deliveryDate = "2022/03/25";
-	private String orderId = "1015";
+	private String orderId = "1148";
 
 	
 	public MainMenu() {
@@ -47,14 +47,13 @@ public class MainMenu {
 			switch (choice) {
 			case 1:
 				choice = menuChoice();
-				
 				switch (choice) {
 				case 1:
+					//addProductToOrder()		puts case 1 into a method
 					int quantity = 0;
 					quantity = chooseQuantity();
 					LineItem lineItem = new LineItem(quantity, product);
 					order.addLineItem(lineItem);
-					lineItem.setSaleOrder(order);
 					break;
 				default:
 					break;
@@ -65,6 +64,11 @@ public class MainMenu {
 			}
 		}
 
+	}
+
+	private void addProductToOrder() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public int chooseQuantity() {

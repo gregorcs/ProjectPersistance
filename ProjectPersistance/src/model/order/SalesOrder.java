@@ -90,6 +90,7 @@ public class SalesOrder {
 	}
 	
 	public boolean addLineItem(LineItem lineItem) {
+		lineItem.setSaleOrder(this);
 		return itemsToBuy.add(lineItem);
 	}
 
